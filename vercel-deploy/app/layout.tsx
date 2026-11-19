@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NonBlockingFonts } from '@/components/NonBlockingFonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="so">
       <body suppressHydrationWarning className="bg-slate-50 text-slate-900 antialiased">
+        <NonBlockingFonts />
         {children}
       </body>
     </html>
