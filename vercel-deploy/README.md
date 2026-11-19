@@ -12,14 +12,14 @@ Folder-ka **`vercel-deploy/`** waxaa lagu ururiyay **dhammaan faylasha rasmiga a
 1. Ku shub mashruuca GitHub repository-gaaga (`Mohamed387162/Amooreqw`).
 2. Gudaha Vercel Project → **Settings** → **Build and Deployment** → **Root Directory**:
    - Ku qor / dooro **`vercel-deploy`**.
-3. Hubi in **Node.js Version** uu yahay **22.x** (si toos ah ayuu uga akhrinayaa `package.json` & `.nvmrc`).
+3. Ka daa **Node.js Version** sida uu Vercel kuugu dejiyay (tusaale **24.x** ama **26.x**) — faylasha `package.json` iyo galka `vercel-deploy` waxay si nadiif ah ugu shaqeeyaan iyadoon la abuurin `Node.js Version Override`.
 4. Guji **Deploy**.
 
 ### Habka 2: Ka dhig Branch gaar ah (`vercel-deploy` branch)
 Haddii aad rabto in aad Vercel ka doorato **Branch ahaan** (`vercel-deploy`):
 ```bash
 git add .
-git commit -m "Add clean vercel-deploy package with Node 22 LTS"
+git commit -m "Remove Node.js version override in vercel-deploy"
 git push origin main
 
 # Ku dir waxa ku jira vercel-deploy branch cusub oo la yiraahdo vercel-deploy
@@ -29,6 +29,5 @@ Kaddib gudaha **Vercel → Settings → Git → Production Branch**, ka dooro **
 
 ---
 
-## Falanqaynta Build Log-ga (Node v26.13.1 & `npm warn`)
-- Dhammaan khadadka ku jiray log-gaaga (`npm warn EBADENGINE superstatic@10.0.0`, `deprecated node-domexception`, `uuid@9.0.1`, `glob@10.5.0`, `eslint@9.39.1`) waxay ahaayeen **digniino npm (`npm warn`)**, ma ahan build error.
-- Sababta `EBADENGINE` u soo baxday waxay ahayd in Vercel uu isticmaalay **Node `v26.13.1`**. Waxaan hadda ku xirnay **Node `22.x` LTS** (`"engines": { "node": "22.x" }` gudaha `package.json` iyo `.nvmrc`) si uu Node 22 ugu dhiso si deggan oo aan lahayn khilaaf version ah.
+## Xasuusin Muhiim ah
+- Xirmada `firebase-tools` (`superstatic`) iyo `@google/genai` waa laga saaray `vercel-deploy/package.json`, sidaa darteed mashruucu si buuxda ayuu ugu dhismaa Node `20.x`, `22.x`, `24.x`, iyo `26.x` iyada oo aan lahayn khilaaf version ama `Node.js Version Override`.
