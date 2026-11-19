@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap");
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: "Plus Jakarta Sans";
+    --font-body: "DM Sans";
+    --font-mono: "JetBrains Mono";
+    --font-arabic: "IBM Plex Sans Arabic";
+    --brand-blue: #0e4da4;
+    --brand-blue-deep: #093575;
+    --brand-red: #d9232e;
+    --surface-canvas: #f8fafc;
+    --surface-card: #ffffff;
+    --ink-primary: #0f172a;
+    --ink-muted: #475569;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--surface-canvas);
+    color: var(--ink-primary);
+  }
+
+  body {
+    font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  [dir="rtl"] body {
+    font-family: var(--font-arabic), var(--font-body), system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display), var(--font-body), system-ui, sans-serif;
+    text-wrap: balance;
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] .font-display {
+    font-family: var(--font-arabic), var(--font-display), system-ui, sans-serif;
+  }
+
+  .font-mono-tabular {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

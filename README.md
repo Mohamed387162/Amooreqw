@@ -1,49 +1,34 @@
-# Amoore Specialist Hospital — Web Application
+# Amoore Specialist Hospital — Vercel Deployment Package
 
 Official trilingual (Somali, English, Arabic RTL) web platform for **Amoore Specialist Hospital (Isbitaalka Takhasusiga Amoore)** covering Mogadishu (West Taleex) and Hargeisa (Jigjiga-Yar), specialist departments, verified timelines, educational academy summaries, discreet patient booking, and brand color/research transparency.
 
 ---
 
-## Sida Bilaash Loogu Deploy Gareeyo Vercel (Using Your GitHub Repo)
+## Folder-ka `vercel-deploy/` (Diyaar u ah Vercel Branch ama Root Directory)
 
-**Vercel Hobby Plan** waa **100% bilaash** (kaarka bangiga ama 30-days trial looma baahna), wuxuuna si toos ah uga shaqeeyaa **GitHub repository-gaaga ha ahaado Public ama Private**:
+Folder-ka **`vercel-deploy/`** waxaa lagu ururiyay **dhammaan faylasha rasmiga ah** ee uu ku shaqaynayo website-ka (iyada oo aan hal dhibic ama fayl ka maqnayn, kana nadiif ah faylasha KMG ah). Waxaad ugu deploy garayn kartaa Vercel **laba hab midkood**:
 
-1. **Hubi in koodhka ugu dambeeya ku jiro GitHub:**
-   ```bash
-   git add .
-   git commit -m "Configure Vercel free deployment"
-   git push origin main
-   ```
+### Habka 1: Ka dooro `vercel-deploy` gudaha Vercel (Root Directory)
+1. Ku shub mashruuca GitHub repository-gaaga (`Mohamed387162/Amooreqw`).
+2. Gudaha Vercel Project → **Settings** → **Build and Deployment** → **Root Directory**:
+   - Ku qor / dooro **`vercel-deploy`**.
+3. Hubi in **Node.js Version** uu yahay **22.x** (si toos ah ayuu uga akhrinayaa `package.json` & `.nvmrc`).
+4. Guji **Deploy**.
 
-2. **Gal Vercel adigoo isticmaalaya akoonkaaga GitHub:**
-   - Tag **[vercel.com](https://vercel.com)** → guji **Sign Up** ama **Login** → dooro **Continue with GitHub**.
-   - Haddii uu ku weydiiyo nooca akoonka, dooro **Hobby (Free — Personal / Non-commercial)**.
+### Habka 2: Ka dhig Branch gaar ah (`vercel-deploy` branch)
+Haddii aad rabto in aad Vercel ka doorato **Branch ahaan** (`vercel-deploy`):
+```bash
+git add .
+git commit -m "Add clean vercel-deploy package with Node 22 LTS"
+git push origin main
 
-3. **Soo xir Repository-gaaga (Import Git Repository):**
-   - Gudaha Vercel Dashboard, guji **Add New...** → **Project**.
-   - Liiska **Import Git Repository** ka hel repository-ga aad u samaysay Isbitaalka Amoore, kaddib guji **Import**.
-
-4. **Ha beddelin Settings-ka (Auto-Detected by `vercel.json`):**
-   - **Framework Preset**: `Next.js`
-   - **Root Directory**: `./`
-   - **Build Command**: `npm run build`
-   - **Environment Variables**: Looma baahna wax furayaal sir ah — boggu si buuxda ayuu u shaqaynayaa isagoo leh dhammaan xogta, saacadda tooska ah ee EAT, 3-da luqadood (SO/EN/AR), iyo Ballanta Qarsoon.
-
-5. **Guji `Deploy`:**
-   - 1–2 daqiiqo kaddib wuxuu ku siinayaa link bilaash ah oo HTTPS leh (tusaale: `https://amoore-hospital.vercel.app`).
-   - Mar kasta oo aad wax ku beddesho oo aad `git push` samayso, Vercel si otomaatig ah ayuu u cusboonaysiinayaa bogga.
+# Ku dir waxa ku jira vercel-deploy branch cusub oo la yiraahdo vercel-deploy
+git subtree push --prefix vercel-deploy origin vercel-deploy
+```
+Kaddib gudaha **Vercel → Settings → Git → Production Branch**, ka dooro **`vercel-deploy`** (Root Directory `./`) oo guji **Redeploy**.
 
 ---
 
-## Local Verification & Testing
-
-```bash
-# Development server (port 3000)
-npm run dev
-
-# Unit tests
-npx --yes tsx --test lib/hospital-logic.test.ts
-
-# Production Vercel-compatible build check
-VERCEL=1 npm run build
-```
+## Falanqaynta Build Log-ga (Node v26.13.1 & `npm warn`)
+- Dhammaan khadadka ku jiray log-gaaga (`npm warn EBADENGINE superstatic@10.0.0`, `deprecated node-domexception`, `uuid@9.0.1`, `glob@10.5.0`, `eslint@9.39.1`) waxay ahaayeen **digniino npm (`npm warn`)**, ma ahan build error.
+- Sababta `EBADENGINE` u soo baxday waxay ahayd in Vercel uu isticmaalay **Node `v26.13.1`**. Waxaan hadda ku xirnay **Node `22.x` LTS** (`"engines": { "node": "22.x" }` gudaha `package.json` iyo `.nvmrc`) si uu Node 22 ugu dhiso si deggan oo aan lahayn khilaaf version ah.
