@@ -1,6 +1,7 @@
 import type {NextConfig} from 'next';
 
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
+const isVercel = process.env.VERCEL === '1';
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const normalizedBasePath =
   rawBasePath && rawBasePath !== '/'
@@ -30,7 +31,7 @@ const nextConfig: NextConfig = {
         },
       }
     : {
-        output: 'standalone',
+        ...(isVercel ? {} : { output: 'standalone' }),
         // Allow access to remote image placeholder.
         images: {
           remotePatterns: [
