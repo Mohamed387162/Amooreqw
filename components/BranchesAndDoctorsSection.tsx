@@ -15,6 +15,7 @@ import {
 import type { BranchId, Locale } from '@/lib/hospital-logic';
 import { filterDoctors, getBranchOpenStatus } from '@/lib/hospital-logic';
 import { BRANCHES, DOCTORS, UI_COPY } from '@/lib/hospital-data';
+import { useLiveTimestamp } from '@/hooks/use-live-eat';
 
 interface BranchesAndDoctorsSectionProps {
   locale: Locale;
@@ -30,6 +31,7 @@ export function BranchesAndDoctorsSection({
   onBookDoctor,
 }: BranchesAndDoctorsSectionProps) {
   const [doctorFilter, setDoctorFilter] = useState<'all' | BranchId>('all');
+  const liveTs = useLiveTimestamp();
   const copy = UI_COPY[locale];
   const visibleDoctors = filterDoctors(DOCTORS, doctorFilter);
 
@@ -56,7 +58,10 @@ export function BranchesAndDoctorsSection({
           <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
             {(['mogadishu', 'hargeisa'] as const).map((branchId) => {
               const branch = BRANCHES[branchId];
-              const status = getBranchOpenStatus(branchId);
+              const status =
+                liveTs > 0
+                  ? getBranchOpenStatus(branchId, new Date(liveTs))
+                  : null;
               const isHighlighted = activeBranch === branchId;
 
               return (
@@ -88,7 +93,7 @@ export function BranchesAndDoctorsSection({
                             : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
                         }`}
                       >
-                        {status.statusLabel[locale]}
+                        {status ? status.statusLabel[locale] : branch.city[locale]}
                       </button>
                     </div>
 
@@ -194,7 +199,7 @@ export function BranchesAndDoctorsSection({
                       className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-800 hover:bg-slate-50 whitespace-nowrap shrink-0 cursor-pointer"
                     >
                       <span>{copy.bookCta}</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
                     </button>
                   </div>
                 </article>
@@ -319,7 +324,7 @@ export function BranchesAndDoctorsSection({
                     className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition-colors hover:border-[#0E4DA4] hover:text-[#0E4DA4] cursor-pointer"
                   >
                     <span>{copy.doctorsSection.bookDoctorBtn}</span>
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                   </button>
                 </div>
               </article>

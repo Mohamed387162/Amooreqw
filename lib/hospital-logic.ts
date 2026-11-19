@@ -7,6 +7,16 @@ export interface BranchOpenStatus {
   isOpen: boolean;
   dayIndex: number; // 0 = Sun, 1 = Mon, ... 6 = Sat in Africa/Mogadishu
   eatTimeLabel: string; // HH:mm
+  hoursPrefix: {
+    so: string;
+    en: string;
+    ar: string;
+  };
+  hoursRange: {
+    so: string;
+    en: string;
+    ar: string;
+  };
   hoursTodayLabel: {
     so: string;
     en: string;
@@ -45,8 +55,6 @@ export interface ValidationResult {
  * - Monday: 07:30 – 17:00
  * - Tue–Thu, Sat–Sun: 07:00 – 17:00
  * - Friday: Closed
- * Hargeisa branch follows the same clinical operating schedule unless updated in Phase 0,
- * and returns a clear verified note distinguishing Google Places Mogadishu hours.
  */
 export function getBranchOpenStatus(
   branchId: BranchId,
@@ -65,8 +73,6 @@ export function getBranchOpenStatus(
   const eatTimeLabel = `${hh}:${mm} EAT`;
 
   if (branchId === 'hargeisa') {
-    // Hargeisa branch is operational (opened Sept 30, 2025); detailed daily hours pending Phase 0 confirmation,
-    // operating standard daytime clinical hours Sat-Thu (closed Friday) as regional baseline.
     const isFriday = dayIndex === 5;
     const isOpen =
       !isFriday && minutesSinceMidnight >= 7 * 60 + 30 && minutesSinceMidnight < 17 * 60;
@@ -75,6 +81,20 @@ export function getBranchOpenStatus(
       isOpen,
       dayIndex,
       eatTimeLabel,
+      hoursPrefix: isFriday
+        ? { so: 'Jimcaha:', en: 'Friday:', ar: 'الجمعة:' }
+        : {
+            so: 'Jadwalka Guud:',
+            en: 'Standard Hours:',
+            ar: 'ساعات العمل:',
+          },
+      hoursRange: isFriday
+        ? { so: 'Xiran', en: 'Closed', ar: 'مغلق' }
+        : {
+            so: '7:30 AM – 5:00 PM',
+            en: '7:30 AM – 5:00 PM',
+            ar: '7:30 AM – 5:00 PM',
+          },
       hoursTodayLabel: isFriday
         ? {
             so: 'Jimcaha: Xiran',
@@ -98,6 +118,8 @@ export function getBranchOpenStatus(
       isOpen: false,
       dayIndex,
       eatTimeLabel,
+      hoursPrefix: { so: 'Jimcaha:', en: 'Friday:', ar: 'الجمعة:' },
+      hoursRange: { so: 'Waa Xiran Yahay', en: 'Closed', ar: 'مغلق' },
       hoursTodayLabel: {
         so: 'Jimcaha: Waa Xiran Yahay',
         en: 'Friday: Closed',
@@ -122,6 +144,16 @@ export function getBranchOpenStatus(
     isOpen,
     dayIndex,
     eatTimeLabel,
+    hoursPrefix: {
+      so: 'Saacadaha Maanta:',
+      en: "Today's Hours:",
+      ar: 'ساعات اليوم:',
+    },
+    hoursRange: {
+      so: openLabel,
+      en: openLabel,
+      ar: openLabel,
+    },
     hoursTodayLabel: {
       so: `Saacadaha Maanta: ${openLabel}`,
       en: `Today's Hours: ${openLabel}`,

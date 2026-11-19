@@ -61,7 +61,10 @@ export function TopBar({ locale, onBookClick }: TopBarProps) {
         <div className="flex items-center gap-2 shrink-0 sm:gap-3">
           <button
             type="button"
-            onClick={onBookClick}
+            onClick={() => {
+              setMobileOpen(false);
+              onBookClick();
+            }}
             className="rounded-lg bg-[#0E4DA4] px-3 py-1.5 text-xs font-semibold text-white transition-colors duration-150 hover:bg-[#093575] whitespace-nowrap shrink-0 cursor-pointer sm:px-4 sm:py-2 sm:text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E4DA4]"
           >
             {copy.bookCta}

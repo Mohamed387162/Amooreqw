@@ -30,7 +30,12 @@ test('Mogadishu branch respects exact Google Places EAT hours', () => {
 
   // Saturday 17:00 EAT = 14:00 UTC -> Closed at 5 PM
   const satClose = new Date('2026-11-21T14:00:00Z');
-  assert.equal(getBranchOpenStatus('mogadishu', satClose).isOpen, false);
+  const satStatus = getBranchOpenStatus('mogadishu', satClose);
+  assert.equal(satStatus.isOpen, false);
+  assert.equal(satStatus.hoursRange.en, '7:00 AM – 5:00 PM');
+  assert.equal(satStatus.hoursRange.ar, '7:00 AM – 5:00 PM');
+  assert.equal(satStatus.hoursPrefix.ar, 'ساعات اليوم:');
+  assert.equal(getBranchOpenStatus('hargeisa', satClose).hoursPrefix.so, 'Jadwalka Guud:');
 });
 
 test('Discreet Privacy Mode masks sensitive clinical condition names', () => {

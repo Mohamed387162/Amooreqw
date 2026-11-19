@@ -25,6 +25,7 @@ import {
   TIME_SLOTS,
   UI_COPY,
 } from '@/lib/hospital-data';
+import { useLiveTimestamp } from '@/hooks/use-live-eat';
 
 interface DiscreetBookingWizardProps {
   locale: Locale;
@@ -36,12 +37,14 @@ interface DiscreetBookingWizardProps {
   onDoctorChange: (id: string) => void;
 }
 
-function getDefaultAppointmentDate(): string {
-  // Deterministic next valid non-Friday date from today
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  if (d.getDay() === 5) {
-    d.setDate(d.getDate() + 1);
+function getDefaultAppointmentDateFromTs(ts: number): string {
+  if (ts <= 0) return '';
+  // Compute tomorrow in East Africa Time (UTC+3), skipping Friday (day 5)
+  const eatMs = ts + 3 * 60 * 60 * 1000;
+  const d = new Date(eatMs);
+  d.setUTCDate(d.getUTCDate() + 1);
+  if (d.getUTCDay() === 5) {
+    d.setUTCDate(d.getUTCDate() + 1);
   }
   return d.toISOString().slice(0, 10);
 }
@@ -56,10 +59,12 @@ export function DiscreetBookingWizard({
   onDoctorChange,
 }: DiscreetBookingWizardProps) {
   const copy = UI_COPY[locale];
+  const liveTs = useLiveTimestamp();
 
-  const [appointmentDate, setAppointmentDate] = useState<string>(
-    getDefaultAppointmentDate
-  );
+  const [userEditedDate, setUserEditedDate] = useState<string | null>(null);
+  const appointmentDate =
+    userEditedDate ?? getDefaultAppointmentDateFromTs(liveTs);
+
   const [timeSlot, setTimeSlot] = useState<string>(TIME_SLOTS[1]);
   const [patientName, setPatientName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
@@ -78,7 +83,10 @@ export function DiscreetBookingWizard({
   const activeService =
     SERVICES.find((s) => s.id === serviceId) ?? SERVICES[0];
   const branchDoctors = DOCTORS.filter((d) => d.branchId === activeBranch);
-  const selectedDoctor = branchDoctors.find((d) => d.id === doctorId);
+  const effectiveDoctorId = branchDoctors.some((d) => d.id === doctorId)
+    ? doctorId
+    : '';
+  const selectedDoctor = branchDoctors.find((d) => d.id === effectiveDoctorId);
 
   const previewCode =
     confirmedCode ||
@@ -105,7 +113,7 @@ export function DiscreetBookingWizard({
         branchId: activeBranch,
         serviceId,
         serviceName: activeService.title[locale],
-        doctorId,
+        doctorId: effectiveDoctorId,
         doctorName: selectedDoctor?.name || '',
         appointmentDate,
         timeSlot,
@@ -342,7 +350,7 @@ export function DiscreetBookingWizard({
                     </label>
                     <select
                       id="booking-doctor"
-                      value={doctorId}
+                      value={effectiveDoctorId}
                       onChange={(e) => onDoctorChange(e.target.value)}
                       className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-[#0E4DA4] focus:outline-none"
                     >
@@ -376,7 +384,7 @@ export function DiscreetBookingWizard({
                         id="booking-date"
                         type="date"
                         value={appointmentDate}
-                        onChange={(e) => setAppointmentDate(e.target.value)}
+                        onChange={(e) => setUserEditedDate(e.target.value)}
                         className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-mono-tabular text-sm text-slate-900 focus:border-[#0E4DA4] focus:outline-none"
                       />
                     </div>

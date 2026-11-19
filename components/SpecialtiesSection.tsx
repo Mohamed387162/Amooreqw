@@ -207,7 +207,7 @@ export function SpecialtiesSection({
                   className="inline-flex items-center gap-2 rounded-lg bg-[#0E4DA4] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#093575] whitespace-nowrap shrink-0 cursor-pointer"
                 >
                   <span>{copy.servicesSection.bookServiceBtn}</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                 </button>
               </div>
             </div>

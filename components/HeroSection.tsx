@@ -17,6 +17,7 @@ import heroClinicImg from '@/src/assets/images/amoore_hero_clinic_1795107188221.
 import type { BranchId, Locale } from '@/lib/hospital-logic';
 import { getBranchOpenStatus } from '@/lib/hospital-logic';
 import { BRANCHES, UI_COPY } from '@/lib/hospital-data';
+import { useLiveTimestamp } from '@/hooks/use-live-eat';
 import { AmooreLogo } from './AmooreLogo';
 
 interface HeroSectionProps {
@@ -39,9 +40,11 @@ export function HeroSection({
   onOpenTransparency,
 }: HeroSectionProps) {
   const [imgError, setImgError] = useState(false);
+  const liveTs = useLiveTimestamp();
   const copy = UI_COPY[locale];
   const branch = BRANCHES[activeBranch];
-  const status = getBranchOpenStatus(activeBranch);
+  const status =
+    liveTs > 0 ? getBranchOpenStatus(activeBranch, new Date(liveTs)) : null;
 
   return (
     <section
@@ -81,15 +84,28 @@ export function HeroSection({
             </div>
             <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
               <Clock className="h-3.5 w-3.5 text-[#0E4DA4] shrink-0" />
-              <span className="font-semibold text-slate-900">
-                {status.statusLabel[locale]}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span dir="ltr" className="font-mono-tabular">
-                {status.eatTimeLabel}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span dir="ltr">{status.hoursTodayLabel[locale]}</span>
+              {status ? (
+                <>
+                  <span className="font-semibold text-slate-900">
+                    {status.statusLabel[locale]}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span dir="ltr" className="font-mono-tabular">
+                    {status.eatTimeLabel}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span>
+                    {status.hoursPrefix[locale]}{' '}
+                    <bdi dir="ltr" className="font-mono-tabular">
+                      {status.hoursRange[locale]}
+                    </bdi>
+                  </span>
+                </>
+              ) : (
+                <span className="font-mono-tabular text-slate-500">
+                  Africa/Mogadishu (EAT)
+                </span>
+              )}
             </div>
           </div>
 
@@ -171,7 +187,7 @@ export function HeroSection({
                   className="inline-flex items-center gap-2 rounded-lg bg-[#0E4DA4] px-5 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#093575] whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E4DA4]"
                 >
                   <span>{copy.hero.primaryBtn}</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                 </button>
 
                 <button
@@ -291,7 +307,10 @@ export function HeroSection({
             <p className="mt-2 font-display text-lg font-bold text-slate-900">
               Mindray DC-30 &amp; EDV
             </p>
-            <p className="mt-1 text-xs text-slate-600">
+            <p
+              dir="ltr"
+              className="mt-1 inline-block text-xs text-slate-600"
+            >
               Ultrasound · Urology · Fertility 40+
             </p>
           </div>

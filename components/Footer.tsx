@@ -38,7 +38,10 @@ export function Footer({ locale, onOpenTransparency }: FooterProps) {
             <p className="mt-2 text-xs leading-relaxed text-slate-400">
               {BRANCHES.mogadishu.address[locale]}
             </p>
-            <p className="mt-2 font-mono-tabular text-xs font-semibold text-white">
+            <p
+              dir="ltr"
+              className="mt-2 inline-block font-mono-tabular text-xs font-semibold text-white"
+            >
               {BRANCHES.mogadishu.primaryPhone}
             </p>
           </div>
@@ -50,7 +53,10 @@ export function Footer({ locale, onOpenTransparency }: FooterProps) {
             <p className="mt-2 text-xs leading-relaxed text-slate-400">
               {BRANCHES.hargeisa.address[locale]} ({BRANCHES.hargeisa.plusCode})
             </p>
-            <p className="mt-2 font-mono-tabular text-xs font-semibold text-white">
+            <p
+              dir="ltr"
+              className="mt-2 inline-block font-mono-tabular text-xs font-semibold text-white"
+            >
               {BRANCHES.hargeisa.primaryPhone} · 063 877 7943
             </p>
           </div>

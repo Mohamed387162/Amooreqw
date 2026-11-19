@@ -683,9 +683,9 @@ export const BRANCHES: Record<BranchId, BranchInfo> = {
     ],
     mapQuery: 'https://maps.google.com/?q=H29P%2B37P+Jigjiga-Yar+Hargeisa',
     directoryNote: {
-      so: 'Waxaa lagu xaqiijiyay warbixinnada MM Somali TV, Gabiley News, KF Media TV, Google Places (H29P+37P), iyo dukumiintiga rasmiga ah ee shaqada.',
-      en: 'Verified via MM Somali TV, Gabiley News, KF Media TV, Google Places (H29P+37P), and official work certificate records.',
-      ar: 'موثق عبر MM Somali TV وGabiley News وKF Media TV وخرائط جوجل (H29P+37P) وشهادة العمل الرسمية.',
+      so: 'Waxaa lagu xaqiijiyay warbixinnada MM Somali TV, Gabiley News, KF Media TV, Google Places (H29P+37P), heshiiska rarka ("Jig-jiga yar Hospital, Hargeisa"), iyo dukumiintiga rasmiga ah ee shaqada.',
+      en: 'Verified via MM Somali TV, Gabiley News, KF Media TV, Google Places (H29P+37P), freight agreement ("Jig-jiga yar Hospital, Hargeisa"), and official work certificate records.',
+      ar: 'موثق عبر MM Somali TV وGabiley News وKF Media TV وخرائط جوجل (H29P+37P) وعقد الشحن وشهادة العمل الرسمية.',
     },
   },
 };
@@ -917,9 +917,9 @@ export const DOCTORS: DoctorProfile[] = [
     branchLabel: { so: 'Hargeysa · Jigjiga-Yar', en: 'Hargeisa · Jigjiga-Yar', ar: 'هرجيسا · جيجيغا يار' },
     languages: 'Arabic · English · Somali Care Team',
     verifiedRecordNote: {
-      so: 'Warqadda caddaynta shaqada ee Scribd waxay muujinaysaa madaxa "Date 2 April 2025" halka qoraalka gudihiisu leeyahay "from June 2025 up to the present time" (waa la diiwaangeliyay farqigan).',
-      en: 'Public work certificate header states "Date 2 April 2025" while body text states "from June 2025 up to the present time" (date discrepancy transparently noted).',
-      ar: 'تظهر شهادة العمل تاريخ 2 أبريل 2025 في الترويسة بينما يذكر النص بدء العمل من يونيو 2025 (ملاحظة توثيقية دقيقة).',
+      so: 'Warqadda caddaynta shaqada ee Scribd waxay muujinaysaa madaxa "Date 2 April 2025" halka qoraalka gudihiisu leeyahay "from June 2025 up to the present time", iyadoo OCR-ka dukumiintigu mararka qaar u akhriyo "Tamir Abdalia Mohammed Mahmmoud" (waa la diiwaangeliyay farqigan).',
+      en: 'Public work certificate header states "Date 2 April 2025" while body text states "from June 2025 up to the present time", and OCR indexing sometimes reads "Tamir Abdalia Mohammed Mahmmoud" (discrepancies transparently noted).',
+      ar: 'تظهر شهادة العمل تاريخ 2 أبريل 2025 في الترويسة بينما يذكر النص بدء العمل من يونيو 2025، مع قراءة OCR أحياناً لاسم "Tamir Abdalia Mohammed Mahmmoud" (ملاحظة توثيقية دقيقة).',
     },
     clinicalFocus: {
       so: 'Qaabilaadda bukaan-socodka, bukaan-jiifka, iyo xaaladaha degdegga ah ee kaadi-mareenka.',
