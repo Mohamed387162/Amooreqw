@@ -1,0 +1,6 @@
+{
+  "name": "Amoore Specialist Hospital",
+  "description": "Official digital platform for Amoore Specialist Hospital (Isbitaalka Takhasusiga Amoore) — Fertility, OB/GYN 40+, Urology & EDV, and Mindray Diagnostic Imaging across Mogadishu and Hargeisa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
